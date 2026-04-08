@@ -1,0 +1,1 @@
+-e "crm.db\n*.log\n.env\nvedor/\ncomposer.lock\n.DS_Store\nThumbs.db" 
