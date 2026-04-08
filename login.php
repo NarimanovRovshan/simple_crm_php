@@ -1,8 +1,9 @@
 <?php
 session_start();
+require 'roles.php';
 
 // Если уже авторизован > спазу на главное
-if (isset($_session['user_id'])){
+if (isset($_SESSION['user_id'])){
 	header("Location: clients_list.php");
 	exit;
 }
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 	if ($username && $password){
 		require 'db.php';
-		$stmt = $pdo->prepare("SELECT id, password_hash FROM users WHERE username = :username");
+		$stmt = $pdo->prepare("SELECT id, password_hash, role FROM users WHERE username = :username");
 		$stmt->execute([':username' => $username]);
 		$user = $stmt->fetch();
 		
@@ -23,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			//Успешный вход
 			$_SESSION['user_id'] = $user['id'];
 			$_SESSION['username'] = $username;
+			$_SESSION['role'] = $user['role'];
 			session_regenerate_id(true); // Защита от каржи сессии
 			header("Location: clients_list.php");
 			exit;

@@ -1,7 +1,11 @@
 <?php
 require 'db.php';
 session_start();
-if (isset($_SESSION['user_id'])) { header(Location: clients_list.php); exit; }
+if (isset($_SESSION['user_id'])){
+	header("Location: clients_list.php");
+	exit;
+}
+
 
 $error= '';
 $success = '';
@@ -24,23 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 	}
 }
-///*Для проверки! 
-//Вывод списка имён учётных записей
-$dbusers = $pdo->query("SELECT * FROM users ORDER BY id DESC");
-$users = $dbusers->fetchAll();  
-
-foreach ($users as $user) {	
-	echo "<tr>";
-	echo "<td> 👤 ". $user['username'] . "</td><br>";
-	echo "</tr>";
-}
-
-// Удаление аккаутна из таблицы
-$usernamedel = "";
-$dbusersdel = $pdo->prepare("DELETE FROM users WHERE username = :usernamedel");
-$dbusersdel->execute([':usernamedel' => $usernamedel]);
-
-//*/
 ?>
 <!DOCTYPE html>
 <html lang="ru">

@@ -1,6 +1,7 @@
 <?php
 // Добовление функции
 require 'auth_check.php';
+require 'roles.php';
 require 'functions.php';
 require 'db.php'; // Подключаем БД
 
@@ -23,7 +24,7 @@ $totalBalance = array_sum(array_column($clients, 'balance'));
 
 // Вывод заголовка
 echo "<h1> 📋️Список клиентов</h1>";
-echo "<p>👋 Привет, <b>" . htmlspecialchars($_SESSION['username']) . "</b> | <a href='logout.php' style='color: #dc3545;'>🚪 Выйти</a></p>";
+echo "<p>👋 Привет, <b>" . htmlspecialchars($_SESSION['username']) . "</b> | Роль: " .  htmlspecialchars($_SESSION['role']) . " | <a href='logout.php' style='color: #dc3545;'>🚪 Выйти</a></p>";
 echo "<p>💵 Общий баланс: " . $totalBalance . " руб.</p>";
 echo "<p><br><a href='add_client.php'>← Добавить ещё</a></p>";
 
@@ -42,10 +43,14 @@ foreach ($clients as $client) {
 	echo "<td> 💰️ ". $client['balance'] . " руб.</td>";
 	echo "<td>🏷️ " . $discount . "%</td>";
 	echo "<td>";
-	echo "<a href='delete_client.php?id=" .$client['id'] ."'
-		onclick='return confirm(\"Удалить клиента " . htmlspecialchars($client['name']) . "?\");'
-		style='color: #dc3545; text-decoration: none; font-weight: bold;'>🗑️ Удалить</a>";
-	echo " | <a href='edit_client.php?id=" .$client['id']. "' style='color:#007bff;'>📝 Изменить</a>";
+	if($_SESSION['role'] === ROLE_ADMIN) {
+		echo "<a href='delete_client.php?id=" .$client['id'] ."'
+			onclick='return confirm(\"Удалить клиента " . htmlspecialchars($client['name']) . "?\");'
+			style='color: #dc3545; text-decoration: none; font-weight: bold;'>🗑️ Удалить</a>";
+		echo " | <a href='edit_client.php?id=" .$client['id']. "' style='color:#007bff;'>📝 Изменить</a>";
+	} else {
+		echo "<span style='color: #aaa;'>🔒 Нет прав</span>";
+	}
 	
 	echo "</td>";
 	echo "</tr>";

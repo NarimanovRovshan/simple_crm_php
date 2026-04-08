@@ -32,8 +32,15 @@ try {
 			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 		)
 	");
+	// Добавляем роль, если колонки ещё нет (безопасно для повторных запусков)
+	try {
+		$pdo->exec("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'manager'");
+	} catch (PDOException $e) {
+		// Колонка уже существует — игнорируем
+	}
 	
 } catch (PDOException $e) {
     die("Ошибка подключения к БД: " . $e->getMessage());
 }
+
 ?>

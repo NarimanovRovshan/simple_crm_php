@@ -38,14 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	echo "<br><a href='add_client.php'>← Добавить ещё</a> | <a href='clients_list.php'>→ Смотреть список</a>";
 	exit;
 
-//////Если всё ок - Выводим подтверждение
-	//echo "<h1> Клиент Добавлен!</h1>";
-	//echo "<p>✅ Имя: <b>". $name ."</b></p>";
-	//echo "<p>📧 Email: <b>". $email ."</b></p>";
-	//echo "<p>☎️ Номер телефона: <b>". $tel . "</b></p>";
-	//echo "<p>💰 Баланс: <b>". $balance . " руб.</b></p>";
-	//echo "<br><a href='add_client.php'>← Добавить ещё одного</a>";
-//////
 } else {
 	// Показываем форму
 	?>

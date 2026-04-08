@@ -1,4 +1,6 @@
 <?php
+require 'roles.php';
+requireRole([ROLE_ADMIN]);//Только адми может удалить
 require 'db.php';
 
 // Проверяем, передан ли ID
